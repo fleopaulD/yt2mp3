@@ -1,10 +1,12 @@
 #!/bin/bash -e
 
+MUSIC_EXPORT_PATH="$HOME/Musique/Youtube/"
+
 if ! [[ $(which yt-dlp) ]]; then
     read -rp "yt-dlp n'est pas installé. Installer ? [o/N] " ans
     if [[ $ans == "o" ]]; then
         sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp --quiet
-        sudo chmod +x /usr/local/bin/yt-dlp
+        sudo chmod a+rx /usr/local/bin/yt-dlp
     fi
 fi
 
@@ -17,25 +19,29 @@ fi
 
 if ! [[ -e /tmp/yt-dlp-updated ]]; then
     echo "Mise à jour de yt-dlp..."
-    yt-dlp -U > /dev/null
+    sudo yt-dlp -U > /dev/null
     touch /tmp/yt-dlp-updated
 fi
+
 echo """
 ░▒█░░▒█░▄▀▀▄░█░▒█░▀█▀░█░▒█░█▀▀▄░█▀▀░░░▀█▀░▄▀▀▄░░░▒█▀▄▀█░▒█▀▀█░█▀▀█
 ░▒▀▄▄▄▀░█░░█░█░▒█░░█░░█░▒█░█▀▀▄░█▀▀░░░░█░░█░░█░░░▒█▒█▒█░▒█▄▄█░░▒▀▄
 ░░░▒█░░░░▀▀░░░▀▀▀░░▀░░░▀▀▀░▀▀▀▀░▀▀▀░░░░▀░░░▀▀░░░░▒█░░▒█░▒█░░░░█▄▄█
 """
 
-echo "Coller l'adresse Youtube de la musique à télécharger"
-read -rp " -> " url
+while true; do
+    echo "Coller l'adresse Youtube de la musique à télécharger [CTRL+C pour quitter]"
+    read -rp " -> " url
 
-yt-dlp -x --audio-format mp3 --audio-quality 0 \
-       --embed-thumbnail \
-       -o "$HOME/YouTube/%(title)s.%(ext)s" \
-       --quiet \
-       --progress --progress-template "download-title:%(info.id)s-%(progress.eta)s"\
-       --no-warnings\
-       "$url"
+    yt-dlp -x --audio-format mp3 --audio-quality 0 \
+        --embed-thumbnail \
+        -o "$MUSIC_EXPORT_PATH/%(title)s.%(ext)s" \
+        --quiet \
+        --progress --progress-template "download-title:%(info.id)s-%(progress.eta)s"\
+        --no-warnings\
+        "$url"
 
-echo "Terminé \o/"
-sleep 2
+    echo "\o/ Le fichier a été correctement téléchargé dans $MUSIC_EXPORT_PATH"
+    echo
+    sleep 1
+done
