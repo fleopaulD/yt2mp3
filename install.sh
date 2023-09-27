@@ -8,7 +8,7 @@ unzip yt2mp3.zip
 cd yt2mp3-main || exit 1
  
 sudo cp yt2mp3.sh /usr/local/bin/yt2mp3 && sudo chmod +x /usr/local/bin/yt2mp3
-cp "Youtube en MP3.desktop" "$HOME/Bureau/"
+cp "Youtube en MP3.desktop" "$HOME/Bureau/" && chmod +x "$HOME/Bureau/Youtube en MP3.desktop" 
 
 cd /tmp || exit 1
 rm -rf yt2mp3*
