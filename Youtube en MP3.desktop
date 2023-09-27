@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Youtube en MP3
+Exec=/usr/local/bin/yt2mp3
+Comment=Converti une vidéo Youtube en fichier MP3
+Terminal=true
+PrefersNonDefaultGPU=false
+Icon=Youtube-youtube.com
+Type=Application
