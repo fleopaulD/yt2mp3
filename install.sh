@@ -1,5 +1,22 @@
 #!/usr/bin/bash
 
+echo "Vérification de la dépendance yt-dlp..."
+if ! [[ $(which yt-dlp) ]]; then
+    read -rp "yt-dlp n'est pas installé. Installer ? [o/N] " ans
+    if [[ $ans == "o" ]]; then
+        sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp --quiet
+        sudo chmod a+rx /usr/local/bin/yt-dlp
+    fi
+fi
+
+echo "Vérification de la dépendance ffmpeg..."
+if ! [[ $(which ffmpeg) ]]; then
+    read -rp "ffmpeg n'est pas installé. Installer ? [o/N] " ans
+    if [[ $ans == "o" ]]; then
+        sudo apt update > /dev/null 2>&1 && sudo apt install -y ffmpeg > /dev/null 2>&1
+    fi
+fi
+
 cd /tmp || exit 1
 
 mkdir yt2mp3 && cd yt2mp3 || exit 1

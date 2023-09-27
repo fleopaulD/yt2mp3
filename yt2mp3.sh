@@ -2,21 +2,6 @@
 
 MUSIC_EXPORT_PATH="$HOME/Musique/Youtube/"
 
-if ! [[ $(which yt-dlp) ]]; then
-    read -rp "yt-dlp n'est pas installé. Installer ? [o/N] " ans
-    if [[ $ans == "o" ]]; then
-        sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp --quiet
-        sudo chmod a+rx /usr/local/bin/yt-dlp
-    fi
-fi
-
-if ! [[ $(which ffmpeg) ]]; then
-    read -rp "ffmpeg n'est pas installé. Installer ? [o/N] " ans
-    if [[ $ans == "o" ]]; then
-        sudo apt update > /dev/null 2>&1 && sudo apt install -y ffmpeg > /dev/null 2>&1
-    fi
-fi
-
 if ! [[ -e /tmp/yt-dlp-updated ]]; then
     echo "Mise à jour de yt-dlp..."
     sudo yt-dlp -U > /dev/null
